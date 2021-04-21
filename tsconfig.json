@@ -1,0 +1,32 @@
+{
+    "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/tsconfig.json",
+    "compilerOptions": {
+        // "target": "es3",
+        // "target": "es3",
+        // "module": "ES2020",
+        "outDir": "../rn-command-dist",
+        // "strict": true,
+        "allowUmdGlobalAccess": true,
+        "downlevelIteration": true,
+        "pretty": true,
+        "skipLibCheck": true,
+        "esModuleInterop": false,
+        "declaration": true,
+        "moduleResolution": "Node",
+        "lib": [
+            "es5",
+            "es6",
+            "dom",
+            "dom.iterable"
+        ],
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "src",
+        "bin"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/__tests__/*"
+    ]
+}

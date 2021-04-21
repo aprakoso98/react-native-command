@@ -1,0 +1,22 @@
+{
+  "name": "r-native",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bin/index.ts",
+  "scripts": {
+    "build": "tsc --project ./tsconfig.json && cp ./package_build.json ../rn-command-dist/package.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/inquirer": "^7.3.1",
+    "@types/node": "^14.14.41",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "child-process": "^1.0.2",
+    "inquirer": "^8.0.0",
+    "moment": "^2.29.1"
+  }
+}
