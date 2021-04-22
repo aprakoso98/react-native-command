@@ -4,13 +4,13 @@ import { ROOT_PATH, theParams } from '../bin';
 function incrementVersion() {
 	type Params = '--type' | '-t' | '--version' | '-v' | '--version-code' | '-vc' | '--platform' | '-p'
 	const {
-		'--type': type, '-t': _type = 'dev',
+		'--type': _type, '-t': __type = 'dev',
 		'--platform': _platform, '-p': __platform = 'android',
 		'--version': version, '-v': _version = 'x.x.+',
 		'--version-code': verCode, '-vc': _verCode = '0'
 	} = theParams as MyObject<Params>
 	const platform = (_platform ?? __platform) as Platform
-	const releaseType = _type ?? type
+	const releaseType = _type ?? __type
 	const releaseConfigPath = `${ROOT_PATH}/envs/config-${releaseType}.json`
 	const releaseConfig: MyObject<Platform, MyObject> = require(`${releaseConfigPath}`)
 	const versionFormat = (version ?? _version).split('.')

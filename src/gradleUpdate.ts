@@ -10,7 +10,7 @@ function gradleUpdate() {
 		'--platform': _platform, '-p': __platform = 'android'
 	} = theParams as MyObject<Params>
 	const platform = (_platform ?? __platform) as Platform
-	const releaseType = _type ?? type
+	const releaseType = type ?? _type
 	const releaseConfigPath = `${ROOT_PATH}/envs/config-${releaseType}.json`
 	const releaseConfigAll: MyObject<Platform, MyObject> = require(`${releaseConfigPath}`)
 	const { [platform]: releaseConfig } = releaseConfigAll
@@ -23,7 +23,7 @@ function gradleUpdate() {
 				return ret
 			}, {} as MyObject)
 		const config = require(`${configFilePath}`)
-		const newConfig = { ...properties, ...config, ...releaseConfig }
+		const newConfig = { ...properties, ...config, ...releaseConfig, CURRENT_CONFIG: releaseType }
 		const parsed = Object.keys(newConfig)
 			.map(key => `${key}=${newConfig[key]}`)
 			.join('\n')
