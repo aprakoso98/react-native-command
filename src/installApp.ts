@@ -15,7 +15,7 @@ async function installApp() {
 	const { selectedDevice } = await inquirer.prompt([{
 		type: "list",
 		name: "selectedDevice",
-		message: "Select device you want to install",
+		message: "Select device you want to set as target install",
 		choices: deviceLists
 	}])
 	const choices = fileLists.split('\n').filter(l => l !== '')
