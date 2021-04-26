@@ -1,18 +1,21 @@
 import { THE_COMMAND, theParams, thread } from '../bin';
 
 async function buildRun(isBuild?: boolean) {
-	type Params = '--type' | '-t' | '--platform' | '-p' | '--additional-command' | '-o' | '--clean' | '-c' | '--build-type' | '-b'
+	type Params = '--type' | '-t' | '--platform' | '-p' | '--clean' | '-c' | '--build-type' | '-b'
 	const {
 		'--type': _type, '-t': __type = 'dev',
 		'--clean': _clean, '-c': __clean = 'false',
 		'--platform': _platform, '-p': __platform = 'android',
 		'--build-type': _buildType, '-b': __buildType = 'assemble',
-		'--additional-command': _command, '-o': __command = ''
+		...additionalCommand
 	} = theParams as MyObject<Params>
+	const command = Object.keys(additionalCommand).reduce((ret, key) => {
+		ret.push(key, additionalCommand[key])
+		return ret
+	}, []).join(' ')
 	const buildType = (_buildType ?? __buildType) as BuildType
 	const platform = (_platform ?? __platform) as Platform
 	const releaseType = (_type ?? __type) as ReleaseType
-	const command = _command ?? __command
 	const clean = ((_clean ?? __clean) as 'true' | 'false' === 'true') ? true : false
 
 	if (platform === 'android') {

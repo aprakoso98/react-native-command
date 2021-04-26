@@ -31,13 +31,13 @@ gradle-update
 	--type, -t		: dev | prod
 increment-version
 	--type, -t		: dev | prod
-	--version, -v		: x.x.+ (x: will not increment, + will increment)
-	--version-code, -vc	: 1 (versionCode will add 1 from previous)`
+	--platform, -p		: ios | android
+	[configkey]	: x | + | 0-9
+		e.g. VERSION_NAME: x.x.+`
 
-let key: string
-export const theParams = params.reduce((ret, data, i) => {
-	if (i % 2 === 0) key = data
-	else ret[key] = data
+export const theParams = params.reduce((ret, data) => {
+	const [key, ...value] = data.split('=')
+	ret[key] = value.join('=')
 	return ret
 }, {})
 
@@ -82,7 +82,7 @@ export function prettyConsole(...objects: any[]) {
 
 export function thread(command: string): Promise<true | Error> {
 	return new Promise(resolve => {
-		console.log(colorize('FgCyan'), `\n=== Child process started command \`${command}\` ===\n`)
+		console.log(colorize('FgCyan'), `=== Child process started command \`${command}\` ===`)
 		const execCommand = spawn(command, [], { shell: true, stdio: 'inherit' })
 		execCommand.on('error', resolve)
 		execCommand.on('close', () => resolve(true))

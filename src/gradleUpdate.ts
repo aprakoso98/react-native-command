@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import { ROOT_PATH, theParams } from '../bin';
+import { colorize, ROOT_PATH, theParams } from '../bin';
 
 function gradleUpdate() {
 	type Params = '--type' | '-t' | '--version' | '-v' | '--version-code' | '-vc' | '--platform' | '-p'
@@ -18,8 +18,8 @@ function gradleUpdate() {
 		const properties = fs.readFileSync(gradleFile, { encoding: 'utf8' })
 			.split(/\n/g)
 			.reduce((ret, val) => {
-				const [key, value] = val?.split('=') ?? []
-				ret[key] = value
+				const [key, ...value] = val?.split('=') ?? []
+				ret[key] = value.join('=')
 				return ret
 			}, {} as MyObject)
 		const config = require(`${configFilePath}`)
