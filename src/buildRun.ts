@@ -19,7 +19,7 @@ async function buildRun(isBuild?: boolean) {
 	const clean = ((_clean ?? __clean) as 'true' | 'false' === 'true') ? true : false
 
 	if (platform === 'android') {
-		await thread(`${THE_COMMAND} gradle-update -p ${platform} -t ${releaseType}`)
+		await thread(`${THE_COMMAND} gradle-update -p="${platform}" -t="${releaseType}"`)
 	}
 
 	async function runApp() {

@@ -19,7 +19,7 @@ function gradleUpdate() {
 			.split(/\n/g)
 			.reduce((ret, val) => {
 				const [key, ...value] = val?.split('=') ?? []
-				ret[key] = value.join('=')
+				if (key !== '') ret[key] = value.join('=')
 				return ret
 			}, {} as MyObject)
 		const config = require(`${configFilePath}`)

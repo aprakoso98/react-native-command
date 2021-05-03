@@ -29,7 +29,7 @@ function incrementVersion() {
 	}, {})
 	const newReleaseConfig = {
 		...otherPlatform,
-		[platform]: newReleaseConfigPlatform
+		[platform]: { ...platformConfig, ...newReleaseConfigPlatform }
 	}
 	fs.writeFileSync(releaseConfigPath, JSON.stringify(newReleaseConfig, undefined, 4))
 }
