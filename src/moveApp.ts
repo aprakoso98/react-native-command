@@ -11,7 +11,8 @@ function moveApp() {
 	const {
 		'--filename': _filename, '-f': __filename
 	} = theParams as MyObject<Params>
-	const filename = _filename ?? __filename ?? `${projectName} ${moment().format('YYYY-MM-DD-HH-mm-ss')}.apk`
+	const filename = _filename ?? __filename ?? `${projectName} ${moment().format('YYYY-MM-DD HH-mm-ss')}.apk`
+	console.log(filename)
 	exec(`cp "${apkPath}" "./${outputFolder}/${filename}"`, (err) => {
 		if (err) { console.error(err); return }
 		console.log(`${filename} copied`)
