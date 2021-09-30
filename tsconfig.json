@@ -4,7 +4,7 @@
         // "target": "es3",
         // "target": "es3",
         // "module": "ES2020",
-        "outDir": "../rn-command-dist",
+        "outDir": "../Typed/rn-command-dist",
         // "strict": true,
         "allowUmdGlobalAccess": true,
         "downlevelIteration": true,
