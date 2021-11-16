@@ -4,7 +4,7 @@ declare global {
 	type BuildType = 'assemble' | 'bundle'
 	type Commands = 'clean' | 'connect' | 'env' | 'move'
 		| 'install' | 'gradle-update' | 'increment-version'
-		| 'build' | 'run' | 'init' | 'emu'
+		| 'build' | 'run' | 'init' | 'emu' | 'git-switch'
 	type MyObject<K extends string = string, V = string> = Record<K, V>
 	function prettyConsole(...objects: any[]): void
 }

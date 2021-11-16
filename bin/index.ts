@@ -11,26 +11,43 @@ import moveApp from "../src/moveApp"
 import buildRun from '../src/buildRun';
 import init from "../src/init"
 import runEmulator from "../src/emulator"
+import switchGit from "../src/switchGit"
 
 const [, , _command, ...params] = process.argv
 const command = _command as Commands
+
+
+// else if (command === 'connect') connectDevice()
+// else if (command === 'emu') runEmulator()
+// else if (command === 'env') envManager()
+// else if (command === 'git-switch') switchGit()
+// else if (command === 'move') moveApp()
+// else if (command === 'install') installApp()
+// else if (command === 'gradle-update') gradleUpdate()
+// else if (command === 'increment-version') incrementVersion()
+// else if (command === 'build') buildRun(true)
+// else if (command === 'run') buildRun()
+// else if (command === 'init') init()
 
 const defaultCommandLog = `No command '${command ?? ''}' found
 
 Available commands: 
 
-clean
+- init: generate env folder structure
+- emu: run avd with select option
+- git-switch: switch git user with select option
+- clean
 	--platform, -p		: ios | android
-connect
+- connect
 	--target, -t		: i.e. wlan0
-env
-move
+- env
+- move
 	--filename, -f		: i.e. new-app.apk
-install
+- install
 	not maintained
-gradle-update
+- gradle-update
 	--type, -t		: dev | prod
-increment-version
+- increment-version
 	--type, -t		: dev | prod
 	--platform, -p		: ios | android
 	[configkey]	: x | + | 0-9
@@ -97,6 +114,7 @@ function execCommand() {
 		else if (command === 'connect') connectDevice()
 		else if (command === 'emu') runEmulator()
 		else if (command === 'env') envManager()
+		else if (command === 'git-switch') switchGit()
 		else if (command === 'move') moveApp()
 		else if (command === 'install') installApp()
 		else if (command === 'gradle-update') gradleUpdate()
