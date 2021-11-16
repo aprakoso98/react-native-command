@@ -10,6 +10,7 @@ import installApp from "../src/installApp"
 import moveApp from "../src/moveApp"
 import buildRun from '../src/buildRun';
 import init from "../src/init"
+import runEmulator from "../src/emulator"
 
 const [, , _command, ...params] = process.argv
 const command = _command as Commands
@@ -82,6 +83,7 @@ export function prettyConsole(...objects: any[]) {
 
 export function thread(command: string): Promise<true | Error> {
 	return new Promise(resolve => {
+		console.log(colorize('BgGreen'), command)
 		console.log(colorize('FgCyan'), `=== Child process started command \`${command}\` ===`)
 		const execCommand = spawn(command, [], { shell: true, stdio: 'inherit' })
 		execCommand.on('error', resolve)
@@ -93,6 +95,7 @@ function execCommand() {
 	return new Promise<string | void>(resolve => {
 		if (command === 'clean') cleanProject()
 		else if (command === 'connect') connectDevice()
+		else if (command === 'emu') runEmulator()
 		else if (command === 'env') envManager()
 		else if (command === 'move') moveApp()
 		else if (command === 'install') installApp()
