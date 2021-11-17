@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 /// <reference path="../global.d.ts" />
+
 import { spawn } from "child_process"
+// import { program } from 'commander'
 import cleanProject from "../src/cleanProject"
 import connectDevice from "../src/connectDevice"
 import envManager from "../src/envManager"
@@ -15,19 +17,6 @@ import switchGit from "../src/switchGit"
 
 const [, , _command, ...params] = process.argv
 const command = _command as Commands
-
-
-// else if (command === 'connect') connectDevice()
-// else if (command === 'emu') runEmulator()
-// else if (command === 'env') envManager()
-// else if (command === 'git-switch') switchGit()
-// else if (command === 'move') moveApp()
-// else if (command === 'install') installApp()
-// else if (command === 'gradle-update') gradleUpdate()
-// else if (command === 'increment-version') incrementVersion()
-// else if (command === 'build') buildRun(true)
-// else if (command === 'run') buildRun()
-// else if (command === 'init') init()
 
 const defaultCommandLog = `No command '${command ?? ''}' found
 
@@ -131,3 +120,65 @@ execCommand().then(response => {
 		console.error(response)
 	}
 })
+
+// program
+// 	.command('clean')
+// 	.action(cleanProject)
+// 	.description('List all the TODO tasks')
+
+// program
+// 	.command('connect')
+// 	.action(connectDevice)
+// 	.description('List all the TODO tasks')
+
+// program
+// 	.command('emu')
+// 	.action(runEmulator)
+// 	.description('List all the TODO tasks')
+
+// program
+// 	.command('env')
+// 	.action(envManager)
+// 	.description('List all the TODO tasks')
+
+// program
+// 	.command('git-switch')
+// 	.action(switchGit)
+// 	.description('List all the TODO tasks')
+
+// program
+// 	.command('move')
+// 	.action(moveApp)
+// 	.description('List all the TODO tasks')
+
+// program
+// 	.command('install')
+// 	.action(installApp)
+// 	.description('List all the TODO tasks')
+
+// program
+// 	.command('gradle-update')
+// 	.action(gradleUpdate)
+// 	.description('List all the TODO tasks')
+
+// program
+// 	.command('increment-version')
+// 	.action(incrementVersion)
+// 	.description('List all the TODO tasks')
+
+// program
+// 	.command('build')
+// 	.action(() => buildRun(true))
+// 	.description('List all the TODO tasks')
+
+// program
+// 	.command('run')
+// 	.action(buildRun)
+// 	.description('List all the TODO tasks')
+
+// program
+// 	.command('init')
+// 	.action(init)
+// 	.description('List all the TODO tasks')
+
+// program.parse()
