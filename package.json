@@ -1,5 +1,5 @@
 {
-  "name": "r-native",
+  "name": "helper",
   "version": "1.0.0",
   "description": "",
   "main": "bin/index.ts",
