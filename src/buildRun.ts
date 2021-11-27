@@ -33,9 +33,9 @@ async function buildRun(isBuild?: boolean) {
 		if (platform === 'android') {
 			if (clean) await thread(`${THE_COMMAND} clean`)
 			if (buildType === 'assemble')
-				await thread(`cd android; ./gradlew assembleRelease;`)
+				await thread(`cd android; ./gradlew assembleRelease -x bundleReleaseJsAndAssets;`)
 			else if (buildType === 'bundle')
-				await thread(`cd android; ./gradlew bundleRelease;`)
+				await thread(`cd android; ./gradlew bundleRelease -x bundleReleaseJsAndAssets`)
 		}
 	}
 
