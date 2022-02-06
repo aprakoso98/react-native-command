@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "bin/index.ts",
+  "type": "module",
   "scripts": {
     "build": "tsc --project ./tsconfig.json && cp ./package_build.json ../Typed/rn-command-dist/package.json"
   },

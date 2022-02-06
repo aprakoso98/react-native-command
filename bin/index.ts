@@ -14,6 +14,7 @@ import buildRun from '../src/buildRun';
 import init from "../src/init"
 import runEmulator from "../src/emulator"
 import switchGit from "../src/switchGit"
+import adbExplorer from "../src/adbExplorer"
 
 const [, , _command, ...params] = process.argv
 const command = _command as Commands
@@ -111,6 +112,7 @@ function execCommand() {
 		else if (command === 'build') buildRun(true)
 		else if (command === 'run') buildRun()
 		else if (command === 'init') init()
+		else if (command === 'explore') adbExplorer()
 		else resolve(defaultCommandLog)
 	})
 }
