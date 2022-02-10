@@ -11,7 +11,7 @@
         "pretty": true,
         "skipLibCheck": true,
         "esModuleInterop": false,
-        "declaration": true,
+        "declaration": false,
         "moduleResolution": "Node",
         "lib": [
             "es5",
