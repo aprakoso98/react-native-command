@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import { colorize, ROOT_PATH, theParams } from '../bin';
+import { ROOT_PATH, theParams } from '../bin';
 
 function gradleUpdate() {
 	type Params = '--type' | '-t' | '--version' | '-v' | '--version-code' | '-vc' | '--platform' | '-p'

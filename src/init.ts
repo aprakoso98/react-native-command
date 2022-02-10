@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import { colorize, ROOT_PATH } from '../bin';
+import { ROOT_PATH } from '../bin';
 
 function errHandling(err: NodeJS.ErrnoException) {
 	if (err?.message) console.log(colorize('FgRed'), err?.message)
