@@ -1,18 +1,13 @@
 import * as fs from 'fs'
-import { ROOT_PATH, theParams } from '../bin';
+import { Option, program } from 'commander';
 
-function gradleUpdate() {
-	type Params = '--type' | '-t' | '--version' | '-v' | '--version-code' | '-vc' | '--platform' | '-p'
+import { ROOT_PATH } from '../bin';
+
+function gradleUpdate({ platform, type: releaseType }: MyObject<'platform' | 'type'>) {
 	const gradleFile = `${ROOT_PATH}/android/gradle.properties`
 	const configFilePath = `${ROOT_PATH}/envs/gradle-properties.json`
-	const {
-		'--type': type, '-t': _type = 'dev',
-		'--platform': _platform, '-p': __platform = 'android'
-	} = theParams as MyObject<Params>
-	const platform = (_platform ?? __platform) as Platform
-	const releaseType = type ?? _type
 	const releaseConfigPath = `${ROOT_PATH}/envs/config-${releaseType}.json`
-	const releaseConfigAll: MyObject<Platform, MyObject> = require(`${releaseConfigPath}`)
+	const releaseConfigAll: MyObject<string, MyObject> = require(`${releaseConfigPath}`)
 	const { [platform]: releaseConfig } = releaseConfigAll
 	if (['dev', 'prod'].includes(releaseType)) {
 		const properties = fs.readFileSync(gradleFile, { encoding: 'utf8' })
@@ -32,4 +27,14 @@ function gradleUpdate() {
 	}
 }
 
-export default gradleUpdate
+export const gradleUpdateCommand = () => program
+	.command('gradle-update')
+	.action(gradleUpdate)
+	.addOption(new Option('-p, --platform <platform>', 'Platforms')
+		.choices(['android', 'ios'])
+		.default('android')
+	)
+	.addOption(new Option('-t, --type <type>', 'Platforms')
+		.choices(['dev', 'prod'])
+		.default('dev')
+	)

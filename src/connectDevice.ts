@@ -1,8 +1,8 @@
-import { exec, execSync } from "child_process"
-import { theParams } from "../bin"
+import { exec } from "child_process"
+import { Option, program } from "commander"
 
 type Device = MyObject<'ip' | 'dev' | 'proto' | 'scope' | 'src'>
-export function getDeviceLists(): Promise<Device[] | undefined> {
+function getDeviceLists(): Promise<Device[] | undefined> {
 	return new Promise(resolve => {
 		exec('adb shell ip route', (err, stdout) => {
 			if (err) {
@@ -27,12 +27,7 @@ export function getDeviceLists(): Promise<Device[] | undefined> {
 	})
 }
 
-async function connectDevice() {
-	type Params = '--target' | '-t'
-	const {
-		'--target': _target, '-t': __target = 'wlan0'
-	} = theParams as MyObject<Params>
-	const target = _target ?? __target
+async function connectDevice({ target }: MyObject<'target'>) {
 	const devices = await getDeviceLists()
 	if (devices?.length > 0) {
 		const selectedDevice = devices.filter((a) => a?.dev === target)
@@ -48,4 +43,7 @@ async function connectDevice() {
 	}
 }
 
-export default connectDevice
+export const connectDeviceCommand = () => program
+	.command('connect')
+	.action(connectDevice)
+	.addOption(new Option('-t, --target <target>', 'target').default('wlan0'))

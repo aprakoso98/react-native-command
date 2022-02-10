@@ -1,4 +1,6 @@
 import * as fs from 'fs'
+import { program } from 'commander';
+
 import { ROOT_PATH } from '../bin';
 
 function errHandling(err: NodeJS.ErrnoException) {
@@ -14,4 +16,7 @@ async function init() {
 	fs.writeFile(`${ROOT_PATH}/envs/gradle-properties.json`, `{}`, { flag }, errHandling)
 }
 
-export default init
+export const initCommand = () => program
+	.command('init')
+	.description('Init')
+	.action(init)

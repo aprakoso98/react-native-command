@@ -1,31 +1,18 @@
-import { THE_COMMAND, theParams, thread } from '../bin';
+import { Argument, Option, program } from 'commander';
+import { THE_COMMAND, thread } from '../bin';
 
-async function buildRun(isBuild?: boolean) {
-	type Params = '--type' | '-t' | '--platform' | '-p' | '--clean' | '-c' | '--build-type' | '-b'
-	const {
-		'--type': _type, '-t': __type = 'dev',
-		'--clean': _clean, '-c': __clean = 'false',
-		'--platform': _platform, '-p': __platform = 'android',
-		'--build-type': _buildType, '-b': __buildType = 'assemble',
-		...additionalCommand
-	} = theParams as MyObject<Params>
-	const command = Object.keys(additionalCommand).reduce((ret, key) => {
-		ret.push(key, additionalCommand[key])
-		return ret
-	}, []).join(' ')
-	const buildType = (_buildType ?? __buildType) as BuildType
-	const platform = (_platform ?? __platform) as Platform
-	const releaseType = (_type ?? __type) as ReleaseType
-	const clean = ((_clean ?? __clean) as 'true' | 'false' === 'true') ? true : false
-
+async function buildRun(args: 'build', options: MyObject<'type' | 'platform' | 'clean' | 'buildType' | 'additional'>) {
+	const { buildType, clean, platform, type: releaseType, additional } = options
+	const isBuild = args === 'build'
+	const command = additional.replace(/^"|"$/g, '')
 	if (platform === 'android') {
-		await thread(`${THE_COMMAND} gradle-update -p="${platform}" -t="${releaseType}"`)
+		await thread(`${THE_COMMAND} gradle-update -p ${platform} -t ${releaseType}`)
 	}
 
 	async function runApp() {
 		if (platform === 'android') {
 			if (clean) await thread(`${THE_COMMAND} clean`)
-			await thread(`react-native run-android ${command}`)
+			await thread(`npx react-native run-android ${command}`)
 		}
 	}
 
@@ -43,5 +30,21 @@ async function buildRun(isBuild?: boolean) {
 	else runApp()
 }
 
-
-export default buildRun
+export const buildRunCommand = () => program
+	.command('run')
+	.action(buildRun)
+	.addArgument(new Argument('[string]').choices(['build']))
+	.addOption(new Option('-c, --clean', 'Platforms').default(false))
+	.addOption(new Option('-a, --additional <string>', 'Platforms').default(''))
+	.addOption(new Option('-p, --platform <platform>', 'Platforms')
+		.choices(['android', 'ios'])
+		.default('android')
+	)
+	.addOption(new Option('-t, --type <type>', 'Platforms')
+		.choices(['dev', 'prod'])
+		.default('dev')
+	)
+	.addOption(new Option('-b, --build-type <build-type>', 'Platforms')
+		.choices(['assemble', 'bundle'])
+		.default('assemble')
+	)

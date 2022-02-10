@@ -1,5 +1,7 @@
 import * as inquirer from "inquirer"
 import { execSync } from "child_process"
+import { program } from "commander";
+
 import { thread, ROOT_PATH } from '../bin';
 
 const outputFolder = "outputs"
@@ -28,4 +30,6 @@ async function installApp() {
 	thread(`adb -s ${selectedDevice} install "${ROOT_PATH}/${outputFolder}/${selectedApk}"`)
 }
 
-export default installApp
+export const installAppCommand = () => program
+	.command('install')
+	.action(installApp)

@@ -1,27 +1,21 @@
 import * as moment from "moment"
 import { exec } from "child_process"
-import { theParams } from "../bin"
+import { Argument, Option, program } from "commander"
 
 const ANDROID_PATH = "android"
 const outputFolder = "outputs"
 
-function moveApp() {
+function moveApp(args: 'aab', options: MyObject<'source' | 'filename' | 'additional'>) {
+	const isAab = args === 'aab'
+	const { additional, source, filename: _filename } = options
 	const { name: projectName }: { name: string } = require(`${process.env.PWD}/package.json`)
-	type Params = '--source' | '-s' | '--filename' | '-f' | '--additional' | '-a' | 'aab'
-	const {
-		'--filename': _filename, '-f': __filename,
-		'--source': _source, '-s': __source,
-		'--additional': _additional, '-a': __additional,
-	} = theParams as MyObject<Params>
 
-	const source = _source ?? __source
-	const additional = _additional ?? __additional ?? ''
 	const apkPath = `./${ANDROID_PATH}/app/build/outputs/apk${source ?? '/release/app-release.apk'}`
 	const aabPath = `./${ANDROID_PATH}/app/build/outputs/bundle${source ?? '/release/app.aab'}`
 
 	let filename = `${projectName}-Bundle-${moment().format('YYYY-MM-DD-HH-mm-ss')}.aab`
 	let pathFile = apkPath
-	if ('aab' in theParams) {
+	if (isAab) {
 		pathFile = aabPath
 	} else {
 		filename = _filename ?? __filename ?? `${projectName}-${moment().format('YYYY-MM-DD-HH-mm-ss')}.apk`
@@ -33,4 +27,10 @@ function moveApp() {
 	})
 }
 
-export default moveApp
+export const moveAppCommand = () => program
+	.command('move')
+	.action(moveApp)
+	.addArgument(new Argument('[string]').choices(['aab']))
+	.addOption(new Option('-s, --source <source>', 'Platforms'))
+	.addOption(new Option('-f, --filename <filename>', 'Platforms'))
+	.addOption(new Option('-a, --additional <string>', 'Platforms').default(''))

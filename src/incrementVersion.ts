@@ -1,20 +1,14 @@
+import { Argument, Option, program } from 'commander';
 import * as fs from 'fs'
-import { ROOT_PATH, theParams } from '../bin';
+import { ROOT_PATH } from '../bin';
 
-function incrementVersion() {
-	type Params = '--type' | '-t' | '-vc' | '--platform' | '-p'
-	const {
-		'--type': _type, '-t': __type = 'dev',
-		'--platform': _platform, '-p': __platform = 'android'
-	} = theParams as MyObject<Params>
-	const platform = (_platform ?? __platform) as Platform
-	const releaseType = _type ?? __type
-	const releaseConfigPath = `${ROOT_PATH}/envs/config-${releaseType}.json`
-	const releaseConfig: MyObject<Platform, MyObject> = require(`${releaseConfigPath}`)
+function incrementVersion(args: MyObject, { platform, type }: MyObject<'type' | 'platform'>) {
+	const releaseConfigPath = `${ROOT_PATH}/envs/config-${type}.json`
+	const releaseConfig: MyObject<string, MyObject> = require(`${releaseConfigPath}`)
 	const { [platform]: platformConfig, ...otherPlatform } = releaseConfig
-	const keys = Object.keys(theParams)
+	const keys = Object.keys(args)
 	const newReleaseConfigPlatform = keys.reduce((ret, key) => {
-		const versionFormat = theParams?.[key].split('.') ?? []
+		const versionFormat = args?.[key].split('.') ?? []
 		if (key in platformConfig) {
 			const exValue = platformConfig[key] as string
 			const newValue = exValue.split('.').map((ver, i) => {
@@ -34,4 +28,21 @@ function incrementVersion() {
 	fs.writeFileSync(releaseConfigPath, JSON.stringify(newReleaseConfig, undefined, 4))
 }
 
-export default incrementVersion
+export const incrementVersionCommand = () => program
+	.command('increment-version')
+	.action(incrementVersion)
+	.addOption(new Option('-t, --type <type>', 'Platforms')
+		.choices(['dev', 'prod'])
+		.default('dev')
+	)
+	.addOption(new Option('-p, --platform <platform>', 'Platforms')
+		.choices(['android', 'ios'])
+		.default('android')
+	)
+	.addArgument(new Argument('[string]').argParser(value => {
+		return value.split(' ').reduce((ret, val) => {
+			const [key, value] = val.split('=')
+			ret[key] = value
+			return ret
+		}, {})
+	}))
