@@ -18,10 +18,12 @@ function moveApp(args: 'aab', options: MyObject<'source' | 'filename' | 'additio
 	if (isAab) {
 		pathFile = aabPath
 	} else {
-		filename = _filename ?? __filename ?? `${projectName}-${moment().format('YYYY-MM-DD-HH-mm-ss')}.apk`
+		filename = _filename ?? `${projectName}-${moment().format('YYYY-MM-DD-HH-mm-ss')}.apk`
 	}
 	filename = `${additional}${filename}`
-	exec(`cp "${pathFile}" "./${outputFolder}/${filename}"`, (err) => {
+
+	const command = `cp "${pathFile}" "./${outputFolder}/${filename}"`
+	exec(command, (err) => {
 		if (err) { console.error(err); return }
 		console.log(`${filename} copied`)
 	})
