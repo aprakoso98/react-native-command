@@ -9,12 +9,16 @@ async function runEmulator() {
 		.toString()
 		.split('\n')
 		.filter(avd => avd !== '')
-	const { selectedAvd } = await inquirer.prompt([{
-		type: "list",
-		name: "selectedAvd",
-		message: "Select avd you want to run",
-		choices: listAvds
-	}])
+
+	const selectedAvd = listAvds.length > 1
+		? (await inquirer.prompt<{ selectedAvd: string }>([{
+			type: "list",
+			name: "selectedAvd",
+			message: "Select avd you want to run",
+			choices: listAvds
+		}])).selectedAvd
+		: listAvds[0]
+
 	thread(`cd $ANDROID_HOME/emulator; ./emulator @${selectedAvd}`)
 }
 
