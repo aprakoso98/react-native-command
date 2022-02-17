@@ -10,10 +10,11 @@ function errHandling(err: NodeJS.ErrnoException) {
 async function init() {
 	const data = JSON.stringify({ ios: {}, android: {} }, null, 4)
 	const flag = 'wx'
-	fs.mkdir(`${ROOT_PATH}/envs`, errHandling)
-	fs.writeFile(`${ROOT_PATH}/envs/config-dev.json`, data, { flag }, errHandling)
-	fs.writeFile(`${ROOT_PATH}/envs/config-prod.json`, data, { flag }, errHandling)
-	fs.writeFile(`${ROOT_PATH}/envs/gradle-properties.json`, `{}`, { flag }, errHandling)
+	fs.mkdirSync(`${ROOT_PATH}/envs`)
+	fs.mkdirSync(`${ROOT_PATH}/outputs`)
+	fs.writeFileSync(`${ROOT_PATH}/envs/config-dev.json`, data, { flag })
+	fs.writeFileSync(`${ROOT_PATH}/envs/config-prod.json`, data, { flag })
+	fs.writeFileSync(`${ROOT_PATH}/envs/gradle-properties.json`, `{}`, { flag })
 }
 
 export const initCommand = () => program
