@@ -1,6 +1,7 @@
-import { Argument, Option, program } from 'commander';
 import * as fs from 'fs'
-import { ROOT_PATH } from '../methods';
+import { Argument, program } from 'commander';
+
+import { platformTarget, releaseType, ROOT_PATH, THE_COMMAND } from '../methods';
 
 function incrementVersion(args: MyObject, { platform, type }: MyObject<'type' | 'platform'>) {
 	const releaseConfigPath = `${ROOT_PATH}/envs/config-${type}.json`
@@ -30,16 +31,15 @@ function incrementVersion(args: MyObject, { platform, type }: MyObject<'type' | 
 
 export const incrementVersionCommand = () => program
 	.command('increment-version')
+	.description(`Increment your version in env files. e.g. ${THE_COMMAND} increment-version VERSION=2.x.+.-
+2 mean in that position will replaced with 2
+x mean in that position will be the same
++ mean in that position will plus 1
+- mean in that position will minus 1`)
 	.action(incrementVersion)
-	.addOption(new Option('-t, --type <type>', 'Platforms')
-		.choices(['dev', 'prod'])
-		.default('dev')
-	)
-	.addOption(new Option('-p, --platform <platform>', 'Platforms')
-		.choices(['android', 'ios'])
-		.default('android')
-	)
-	.addArgument(new Argument('[string]').argParser(value => {
+	.addOption(releaseType)
+	.addOption(platformTarget)
+	.addArgument(new Argument('[string]', 'Additional properties').argParser(value => {
 		return value.split(' ').reduce((ret, val) => {
 			const [key, value] = val.split('=')
 			ret[key] = value

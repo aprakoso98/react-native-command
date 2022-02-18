@@ -31,8 +31,9 @@ function moveApp(args: 'aab', options: MyObject<'source' | 'filename' | 'additio
 
 export const moveAppCommand = () => program
 	.command('move')
+	.description('Move apk to /outputs folder')
 	.action(moveApp)
-	.addArgument(new Argument('[string]').choices(['aab']))
-	.addOption(new Option('-s, --source <source>', 'Platforms'))
-	.addOption(new Option('-f, --filename <filename>', 'Platforms'))
-	.addOption(new Option('-a, --additional <string>', 'Platforms').default(''))
+	.addArgument(new Argument('[string]', 'Move aab file').choices(['aab']))
+	.addOption(new Option('-s, --source <source>', 'Source apk you want to move'))
+	.addOption(new Option('-f, --filename <filename>', 'Filename of moved apk'))
+	.addOption(new Option('-a, --additional <string>', 'Additional filename will be added to first character. e.g. "-a SG-" -> "SG-{filename}"').default(''))

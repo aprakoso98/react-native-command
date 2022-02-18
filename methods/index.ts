@@ -1,3 +1,4 @@
+import { Option } from "commander"
 import { spawn } from "child_process"
 
 export const ROOT_PATH = process.env.PWD
@@ -11,3 +12,7 @@ export function thread(command: string): Promise<true | Error> {
 		execCommand.on('close', () => resolve(true))
 	})
 }
+
+export const releaseType = new Option('-t, --type <type>', 'Release type').choices(['dev', 'prod']).default('dev')
+export const androidBuildTypeOption = new Option('-b, --build-type <build-type>', 'Android build type').choices(['assemble', 'bundle']).default('assemble')
+export const platformTarget = new Option('-p, --platform <platform>', 'Platform target').choices(['android', 'ios']).default('android')

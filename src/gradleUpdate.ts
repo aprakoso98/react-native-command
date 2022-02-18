@@ -1,7 +1,7 @@
 import * as fs from 'fs'
-import { Option, program } from 'commander';
+import { program } from 'commander';
 
-import { ROOT_PATH } from '../methods';
+import { platformTarget, releaseType, ROOT_PATH } from '../methods';
 
 function gradleUpdate({ platform, type: releaseType }: MyObject<'platform' | 'type'>) {
 	const gradleFile = `${ROOT_PATH}/android/gradle.properties`
@@ -29,12 +29,7 @@ function gradleUpdate({ platform, type: releaseType }: MyObject<'platform' | 'ty
 
 export const gradleUpdateCommand = () => program
 	.command('gradle-update')
+	.description('Switch gradle.properties value from env value')
 	.action(gradleUpdate)
-	.addOption(new Option('-p, --platform <platform>', 'Platforms')
-		.choices(['android', 'ios'])
-		.default('android')
-	)
-	.addOption(new Option('-t, --type <type>', 'Platforms')
-		.choices(['dev', 'prod'])
-		.default('dev')
-	)
+	.addOption(releaseType)
+	.addOption(platformTarget)

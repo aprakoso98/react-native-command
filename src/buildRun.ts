@@ -1,5 +1,5 @@
 import { Argument, Option, program } from 'commander';
-import { THE_COMMAND, thread } from '../methods';
+import { androidBuildTypeOption, platformTarget, releaseType, THE_COMMAND, thread } from '../methods';
 
 async function buildRun(args: 'build', options: MyObject<'type' | 'platform' | 'clean' | 'buildType' | 'additional'>) {
 	const { buildType, clean, platform, type: releaseType, additional } = options
@@ -32,19 +32,11 @@ async function buildRun(args: 'build', options: MyObject<'type' | 'platform' | '
 
 export const buildRunCommand = () => program
 	.command('run')
+	.description('Helper command to run or build react-native project')
 	.action(buildRun)
-	.addArgument(new Argument('[string]').choices(['build']))
-	.addOption(new Option('-c, --clean', 'Platforms').default(false))
-	.addOption(new Option('-a, --additional <string>', 'Platforms').default(''))
-	.addOption(new Option('-p, --platform <platform>', 'Platforms')
-		.choices(['android', 'ios'])
-		.default('android')
-	)
-	.addOption(new Option('-t, --type <type>', 'Platforms')
-		.choices(['dev', 'prod'])
-		.default('dev')
-	)
-	.addOption(new Option('-b, --build-type <build-type>', 'Platforms')
-		.choices(['assemble', 'bundle'])
-		.default('assemble')
-	)
+	.addArgument(new Argument('[string]', 'Build the project').choices(['build']))
+	.addOption(new Option('-c, --clean', 'Clean the project before execute run or build').default(false))
+	.addOption(new Option('-a, --additional <string>', 'Additional script on react-native command').default(''))
+	.addOption(platformTarget)
+	.addOption(releaseType)
+	.addOption(androidBuildTypeOption)

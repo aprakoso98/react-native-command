@@ -1,5 +1,5 @@
-import { Option, program } from 'commander'
-import { thread } from '../methods'
+import { program } from 'commander'
+import { platformTarget, thread } from '../methods'
 
 function cleanProject({ platform }: MyObject<'platform'>) {
 	if (platform === 'ios') {
@@ -11,9 +11,6 @@ function cleanProject({ platform }: MyObject<'platform'>) {
 
 export const cleanProjectCommand = () => program
 	.command('clean')
-	.addOption(new Option('-p, --platform <platform>', 'Platforms')
-		.choices(['android', 'ios'])
-		.default('android')
-	)
-	.description('Clean project')
+	.description('Clean react-native project')
 	.action(cleanProject)
+	.addOption(platformTarget)

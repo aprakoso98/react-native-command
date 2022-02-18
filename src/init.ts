@@ -19,5 +19,5 @@ async function init() {
 
 export const initCommand = () => program
 	.command('init')
-	.description('Init')
+	.description('Initialize env files')
 	.action(init)

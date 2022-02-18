@@ -18,9 +18,9 @@ const USERS: Record<string, User> = {
 
 async function switchGit({ username, email }: User) {
 	let user = {} as User
-	if (username && email) {
-		user.email = email
-		user.username = username
+	if (username || email) {
+		if (email) user.email = email
+		if (username) user.username = username
 	} else {
 		const listUsers = Object.keys(USERS)
 		const { selectedUser } = await inquirer.prompt([{
@@ -37,6 +37,7 @@ async function switchGit({ username, email }: User) {
 
 export const switchGitCommand = () => program
 	.command('git-switch')
+	.description('Switch git user and email')
 	.action(switchGit)
 	.addOption(new Option('-u, --username <username>', 'username')
 		.argParser(username => {

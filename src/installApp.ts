@@ -32,4 +32,5 @@ async function installApp() {
 
 export const installAppCommand = () => program
 	.command('install')
+	.description('Install apk file from list in /outputs folder')
 	.action(installApp)
