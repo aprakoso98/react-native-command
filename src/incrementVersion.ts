@@ -1,6 +1,6 @@
 import { Argument, Option, program } from 'commander';
 import * as fs from 'fs'
-import { ROOT_PATH } from '../bin';
+import { ROOT_PATH } from '../methods';
 
 function incrementVersion(args: MyObject, { platform, type }: MyObject<'type' | 'platform'>) {
 	const releaseConfigPath = `${ROOT_PATH}/envs/config-${type}.json`

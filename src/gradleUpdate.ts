@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import { Option, program } from 'commander';
 
-import { ROOT_PATH } from '../bin';
+import { ROOT_PATH } from '../methods';
 
 function gradleUpdate({ platform, type: releaseType }: MyObject<'platform' | 'type'>) {
 	const gradleFile = `${ROOT_PATH}/android/gradle.properties`

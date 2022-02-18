@@ -1,5 +1,5 @@
 import { Option, program } from 'commander'
-import { thread } from '../bin'
+import { thread } from '../methods'
 
 function cleanProject({ platform }: MyObject<'platform'>) {
 	if (platform === 'ios') {

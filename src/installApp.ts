@@ -2,7 +2,7 @@ import * as inquirer from "inquirer"
 import { execSync } from "child_process"
 import { program } from "commander";
 
-import { thread, ROOT_PATH } from '../bin';
+import { thread, ROOT_PATH } from '../methods';
 
 const outputFolder = "outputs"
 

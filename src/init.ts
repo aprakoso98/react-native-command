@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import { program } from 'commander';
 
-import { ROOT_PATH } from '../bin';
+import { ROOT_PATH } from '../methods';
 
 function errHandling(err: NodeJS.ErrnoException) {
 	if (err?.message) console.log(colorize('FgRed'), err?.message)

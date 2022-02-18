@@ -1,5 +1,5 @@
 import { Argument, Option, program } from 'commander';
-import { THE_COMMAND, thread } from '../bin';
+import { THE_COMMAND, thread } from '../methods';
 
 async function buildRun(args: 'build', options: MyObject<'type' | 'platform' | 'clean' | 'buildType' | 'additional'>) {
 	const { buildType, clean, platform, type: releaseType, additional } = options

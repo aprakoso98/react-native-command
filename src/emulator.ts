@@ -2,7 +2,7 @@ import * as inquirer from "inquirer"
 import { execSync } from "child_process"
 import { program } from "commander";
 
-import { thread } from '../bin';
+import { thread } from '../methods';
 
 async function runEmulator() {
 	const listAvds = execSync('emulator -list-avds')

@@ -1,4 +1,4 @@
-import * as moment from "moment"
+import moment from "moment"
 import { exec } from "child_process"
 import { Argument, Option, program } from "commander"
 

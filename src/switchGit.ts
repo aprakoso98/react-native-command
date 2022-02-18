@@ -1,7 +1,7 @@
 import * as inquirer from "inquirer"
 import { InvalidArgumentError, Option, program } from "commander";
 
-import { thread } from '../bin';
+import { thread } from '../methods';
 
 type User = MyObject<'username' | 'email'>
 

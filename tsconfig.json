@@ -1,16 +1,15 @@
 {
     "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/tsconfig.json",
     "compilerOptions": {
-        // "target": "es3",
-        // "target": "es3",
-        // "module": "ES2020",
+        "target": "esnext",
+        "module": "commonjs",
         "outDir": "../modules/rn-command-dist",
         // "strict": true,
         "allowUmdGlobalAccess": true,
         "downlevelIteration": true,
         "pretty": true,
         "skipLibCheck": true,
-        "esModuleInterop": false,
+        "esModuleInterop": true,
         "declaration": false,
         "moduleResolution": "Node",
         "lib": [
