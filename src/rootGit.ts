@@ -6,12 +6,20 @@ import { thread } from '../methods';
 const root = `~`
 const rootGitFolder = `${root}/.git`
 const movedRootGitFolder = `${root}/root-git`
+const gitignore = `${root}/.gitignore`
+const movedGitignore = `${root}/root-gitignore`
 
-async function rootGit({ rename }: { rename: boolean }) {
-	exec(`ls ${rootGitFolder}`, (err) => {
+function rootGit({ rename }: { rename: boolean }) {
+	exec(`ls ${rootGitFolder}`, async (err) => {
 		if (rename) {
-			if (err) return thread(`mv ${movedRootGitFolder} ${rootGitFolder}; code ${root}`)
-			return thread(`mv ${rootGitFolder} ${movedRootGitFolder}`)
+			if (err) {
+				await thread(`mv ${movedRootGitFolder} ${rootGitFolder}; code ${root}`)
+				await thread(`mv ${movedGitignore} ${gitignore}`)
+				return
+			}
+			await thread(`mv ${rootGitFolder} ${movedRootGitFolder}`)
+			await thread(`mv ${gitignore} ${movedGitignore}`)
+			return
 		}
 		console.log(colorize(err ? 'BgRed' : 'BgGreen'), ` ${rootGitFolder} ${err ? 'not found' : 'has found'} `)
 	})
