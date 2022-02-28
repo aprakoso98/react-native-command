@@ -1,4 +1,4 @@
-import { _COLORS } from "./global"
+import { _COLORS, _TERMINAL_COLORS } from "./global"
 
 declare global {
 	type Platform = 'android' | 'ios'
@@ -9,8 +9,10 @@ declare global {
 		| 'build' | 'run' | 'init' | 'emu' | 'git-switch' | 'explore'
 	type MyObject<K extends string = string, V = string> = Record<K, V>
 
+	var TERMINAL_COLORS: typeof _TERMINAL_COLORS
 	var COLORS: typeof _COLORS
 
+	function uuid(): string
 	function prettyConsole(...objects: any[]): void
-	function colorize(color?: keyof typeof _COLORS): string
+	function colorize(color?: keyof typeof _TERMINAL_COLORS): string
 }

@@ -3,3 +3,6 @@ build/
 *.lock
 *.log
 *.DS_Store
+/binance/*
+binance.json
+package-lock.json

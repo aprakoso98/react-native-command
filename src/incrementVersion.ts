@@ -17,7 +17,7 @@ function incrementVersion(args: MyObject, { platform, type }: MyObject<'type' | 
 				if (verFormat === '+') return parseInt(ver) + 1
 				if (verFormat.match(/^[0-9]*$/)) return parseInt(verFormat)
 				return ver
-			}).join('.')
+			}).join('.') // @ts-ignore
 			ret[key] = newValue
 		}
 		return ret
@@ -41,7 +41,7 @@ x mean in that position will be the same
 	.addOption(platformTarget)
 	.addArgument(new Argument('[string]', 'Additional properties').argParser(value => {
 		return value.split(' ').reduce((ret, val) => {
-			const [key, value] = val.split('=')
+			const [key, value] = val.split('=') // @ts-ignore
 			ret[key] = value
 			return ret
 		}, {})

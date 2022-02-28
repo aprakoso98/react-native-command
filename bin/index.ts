@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import './global'
-import inquirer from 'inquirer'
 import { program } from 'commander'
 
 import { connectDeviceCommand } from "../src/connectDevice"
@@ -14,16 +13,18 @@ import { buildRunCommand } from '../src/buildRun'
 import { gradleUpdateCommand } from '../src/gradleUpdate'
 import { installAppCommand } from '../src/installApp'
 import { moveAppCommand } from '../src/moveApp'
+import { rootGitCommand } from '../src/rootGit'
 
 initCommand()
 runEmulatorCommand()
 installAppCommand()
 moveAppCommand()
 cleanProjectCommand()
+rootGitCommand()
 switchGitCommand()
 connectDeviceCommand()
 buildRunCommand()
 gradleUpdateCommand()
 incrementVersionCommand()
 
-program.parse()
+program.parse(process.argv)

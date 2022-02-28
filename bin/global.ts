@@ -1,6 +1,6 @@
 /// <reference path="global.d.ts" />
 
-export const _COLORS = {
+export const _TERMINAL_COLORS = {
 	_Reset: "\x1b[0m",
 	Bright: "\x1b[1m",
 	Dim: "\x1b[2m",
@@ -28,13 +28,43 @@ export const _COLORS = {
 	BgWhite: "\x1b[47m",
 }
 
+export const _COLORS = {
+	black: "#000000",
+	borderBg: "#cdd3e0",
+	danger: "#e60f0f",
+	pink: "#e831ae",
+	dangerSoft: "#fbdbe7",
+	greyFont: "#959595",
+	greySoft: "#8b8b8b",
+	info: "#288cf7",
+	primary: "#354BC5",
+	lightBlue: "#00C6FF",
+	purple: "#904bb7",
+	purpleSoft: "#ebcbfd",
+	secondary: "#808080",
+	success: "#55c09b",
+	successHighlight: "#03DAC6",
+	successSoft: "#d6f6eb",
+	text: "#8b8b8b",
+	warning: "#f28c71",
+	white: "#ffffff"
+}
+
+globalThis.TERMINAL_COLORS = _TERMINAL_COLORS
 globalThis.COLORS = _COLORS
 
 globalThis.colorize = function (color) {
-	const selectedColor = _COLORS[color ?? 'FgWhite']
-	return `${selectedColor}%s${_COLORS._Reset}`
+	const selectedColor = _TERMINAL_COLORS[color ?? 'FgWhite']
+	return `${selectedColor}%s${_TERMINAL_COLORS._Reset}`
 }
 
 globalThis.prettyConsole = function (...objects) {
 	objects.map(d => console.log(JSON.stringify(d, null, 4)));
+}
+
+globalThis.uuid = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & (0x3 | 0x8))
+    return v.toString(16)
+  })
 }
