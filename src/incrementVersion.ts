@@ -31,6 +31,7 @@ function incrementVersion(args: MyObject, { platform, type }: MyObject<'type' | 
 
 export const incrementVersionCommand = () => program
 	.command('increment-version')
+	.alias('ic')
 	.description(`Increment your version in env files. e.g. ${THE_COMMAND} increment-version VERSION=2.x.+.-
 2 mean in that position will replaced with 2
 x mean in that position will be the same

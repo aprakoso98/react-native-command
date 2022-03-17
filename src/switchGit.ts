@@ -6,8 +6,8 @@ import { thread } from '../methods';
 type User = MyObject<'username' | 'email'>
 
 const USERS: Record<string, User> = {
-	aprakoso98: {
-		username: 'aprakoso98',
+	'bambang-ap': {
+		username: 'bambang-ap',
 		email: 'adhyt.scott@gmail.com'
 	},
 	'bambang.ap': {
@@ -37,6 +37,7 @@ async function switchGit({ username, email }: User) {
 
 export const switchGitCommand = () => program
 	.command('git-switch')
+	.alias('gs')
 	.description('Switch git user and email')
 	.action(switchGit)
 	.addOption(new Option('-u, --username <username>', 'username')

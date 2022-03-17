@@ -31,6 +31,7 @@ function moveApp(args: 'aab', options: MyObject<'source' | 'filename' | 'additio
 
 export const moveAppCommand = () => program
 	.command('move')
+	.alias('mv')
 	.description('Move apk to /outputs folder')
 	.action(moveApp)
 	.addArgument(new Argument('[string]', 'Move aab file').choices(['aab']))

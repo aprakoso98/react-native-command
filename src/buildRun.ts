@@ -32,6 +32,7 @@ async function buildRun(args: 'build', options: MyObject<'type' | 'platform' | '
 
 export const buildRunCommand = () => program
 	.command('run')
+	.alias('r')
 	.description('Helper command to run or build react-native project')
 	.action(buildRun)
 	.addArgument(new Argument('[string]', 'Build the project').choices(['build']))

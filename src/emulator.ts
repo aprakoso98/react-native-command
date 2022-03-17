@@ -23,6 +23,7 @@ async function runEmulator() {
 }
 
 export const runEmulatorCommand = () => program
-	.command('emu')
+	.command('emulator')
+	.alias('emu')
 	.description('Run emulator with selected device')
 	.action(runEmulator)

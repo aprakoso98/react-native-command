@@ -29,6 +29,7 @@ function gradleUpdate({ platform, type: releaseType }: MyObject<'platform' | 'ty
 
 export const gradleUpdateCommand = () => program
 	.command('gradle-update')
+	.alias('gu')
 	.description('Switch gradle.properties value from env value')
 	.action(gradleUpdate)
 	.addOption(releaseType)

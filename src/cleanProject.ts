@@ -11,6 +11,7 @@ function cleanProject({ platform }: MyObject<'platform'>) {
 
 export const cleanProjectCommand = () => program
 	.command('clean')
+	.alias('cl')
 	.description('Clean react-native project')
 	.action(cleanProject)
 	.addOption(platformTarget)
