@@ -30,7 +30,7 @@ function getDeviceLists(): Promise<Device[] | undefined> {
 
 async function connectDevice({ target }: MyObject<"target">) {
   const devices = (await getDeviceLists()) ?? [];
-  console.log(devices);
+
   if (devices?.length > 0) {
     const selectedTarget =
       devices.length > 1
