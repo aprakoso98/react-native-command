@@ -1,36 +1,46 @@
-import * as inquirer from "inquirer"
-import { execSync } from "child_process"
+import * as inquirer from "inquirer";
+import { execSync } from "child_process";
 import { program } from "commander";
 
-import { thread, ROOT_PATH } from '../methods';
+import { thread, ROOT_PATH } from "../methods";
 
-const outputFolder = "outputs"
+const outputFolder = "outputs";
 
 async function installApp() {
-	const deviceLists = execSync('adb devices').toString().split('\n')
-		.reduce<string[]>((ret, list) => {
-			const index = list.indexOf('\t')
-			if (index > 0) ret.push(list.slice(0, index))
-			return ret
-		}, [])
-	const fileLists = execSync(`ls ${outputFolder}`).toString()
-	const { selectedDevice } = await inquirer.prompt([{
-		type: "list",
-		name: "selectedDevice",
-		message: "Select device you want to set as target install",
-		choices: deviceLists
-	}])
-	const choices = fileLists.split('\n').filter(l => l !== '')
-	const { selectedApk } = await inquirer.prompt([{
-		type: "list",
-		name: "selectedApk",
-		message: "Select apk you want to install",
-		choices
-	}])
-	thread(`adb -s ${selectedDevice} install "${ROOT_PATH}/${outputFolder}/${selectedApk}"`)
+  const deviceLists = execSync("adb devices")
+    .toString()
+    .split("\n")
+    .reduce<string[]>((ret, list) => {
+      const index = list.indexOf("\t");
+      if (index > 0) ret.push(list.slice(0, index));
+      return ret;
+    }, []);
+  const fileLists = execSync(`ls ${outputFolder}`).toString();
+  const { selectedDevice } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "selectedDevice",
+      message: "Select device you want to set as target install",
+      choices: deviceLists,
+    },
+  ]);
+  const choices = fileLists.split("\n").filter((l) => l !== "");
+  const { selectedApk } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "selectedApk",
+      message: "Select apk you want to install",
+      choices,
+    },
+  ]);
+  thread(
+    `adb -s ${selectedDevice} install "${ROOT_PATH}/${outputFolder}/${selectedApk}"`
+  );
 }
 
-export const installAppCommand = () => program
-	.command('install')
-	.description('Install apk file from list in /outputs folder')
-	.action(installApp)
+export const installAppCommand = () =>
+  program
+    .command("install")
+    .alias("i")
+    .description("Install apk file from list in /outputs folder")
+    .action(installApp);
