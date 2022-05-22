@@ -21,7 +21,7 @@ function getDeviceLists(): Promise<Device[] | undefined> {
             if (device.src) return device;
             else return {} as Device;
           })
-          .filter((d) => d?.src);
+          .filter((d) => d.src);
         resolve(devices);
       }
     });
@@ -29,9 +29,9 @@ function getDeviceLists(): Promise<Device[] | undefined> {
 }
 
 async function connectDevice({ target }: MyObject<"target">) {
-  const devices = (await getDeviceLists()) ?? [];
+  const devices = (await getDeviceLists()) || [];
 
-  if (devices?.length > 0) {
+  if (devices.length > 0) {
     const selectedTarget =
       devices.length > 1
         ? (
@@ -45,10 +45,12 @@ async function connectDevice({ target }: MyObject<"target">) {
             ])
           ).selectedDevice
         : devices[0].dev;
-    const selectedDevice = devices.find((a) => a?.dev === selectedTarget);
+    const selectedDevice = devices.find((a) => a.dev === selectedTarget) || {
+      src: "",
+    };
 
     exec(
-      `adb disconnect; adb tcpip 5555; adb connect ${selectedDevice?.src}:5555`,
+      `adb disconnect; adb tcpip 5555; adb connect ${selectedDevice.src}:5555`,
       (err, msg) => {
         if (err) console.error(err);
         else console.log(msg);

@@ -20,10 +20,10 @@ async function moveApp(
   }: { name: string } = require(`${process.env.PWD}/package.json`);
 
   const apkPath = `./${ANDROID_PATH}/app/build/outputs/apk${
-    source ?? "/release/app-release.apk"
+    source || "/release/app-release.apk"
   }`;
   const aabPath = `./${ANDROID_PATH}/app/build/outputs/bundle${
-    source ?? "/release/app.aab"
+    source || "/release/app.aab"
   }`;
 
   let filename = `${projectName}-Bundle-${moment().format(
@@ -34,7 +34,7 @@ async function moveApp(
     pathFile = aabPath;
   } else {
     filename =
-      _filename ??
+      _filename ||
       `${projectName}-${moment().format("YYYY-MM-DD-HH-mm-ss")}.apk`;
   }
   filename = `${additional}${filename}`;

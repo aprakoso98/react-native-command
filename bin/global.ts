@@ -54,7 +54,7 @@ globalThis.TERMINAL_COLORS = _TERMINAL_COLORS
 globalThis.COLORS = _COLORS
 
 globalThis.colorize = function (color) {
-	const selectedColor = _TERMINAL_COLORS[color ?? 'FgWhite']
+	const selectedColor = _TERMINAL_COLORS[color || 'FgWhite']
 	return `${selectedColor}%s${_TERMINAL_COLORS._Reset}`
 }
 
