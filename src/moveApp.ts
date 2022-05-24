@@ -9,12 +9,15 @@ const outputFolder = "outputs";
 
 async function moveApp(
   args: "aab",
-  options: MyObject<"source" | "filename" | "additional"> & { list?: boolean }
+  options: MyObject<"source" | "filename" | "additional"> & {
+    list?: boolean;
+    skipList?: boolean;
+  }
 ) {
   if (!fs.existsSync(outputFolder)) fs.mkdirSync(outputFolder);
 
   const isAab = args === "aab";
-  const { list, additional, source, filename: _filename } = options;
+  const { list, additional, source, filename: _filename, skipList } = options;
   const {
     name: projectName,
   }: { name: string } = require(`${process.env.PWD}/package.json`);
@@ -39,9 +42,11 @@ async function moveApp(
   }
   filename = `${additional}${filename}`;
 
-  const fileChoossed = await getListApk(isAab);
-  if (list && fileChoossed) {
-    pathFile = fileChoossed;
+  if (!skipList) {
+    const fileChoossed = await getListApk(isAab);
+    if (list && fileChoossed) {
+      pathFile = fileChoossed;
+    }
   }
 
   const command = `cp "${pathFile}" "./${outputFolder}/${filename}"`;
@@ -66,6 +71,9 @@ export const moveAppCommand = () =>
       new Option("-l, --list", "Show list apk, and select to move").default(
         false
       )
+    )
+    .addOption(
+      new Option("-sl, --skip-list", "Skip apk chooser").default(false)
     )
     .addOption(
       new Option("-s, --source <source>", "Source apk you want to move")
