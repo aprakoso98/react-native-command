@@ -26,7 +26,7 @@ async function moveApp(
     source || "/release/app-release.apk"
   }`;
   const aabPath = `./${ANDROID_PATH}/app/build/outputs/bundle${
-    source || "/release/app.aab"
+    source || "/release/app-release.aab"
   }`;
 
   let filename = `${projectName}-Bundle-${moment().format(
